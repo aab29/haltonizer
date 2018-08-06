@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="scaffolded-by" content="https://github.com/google/stagehand">
+    <title>haltonizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="main.dart.js"></script>
+</head>
+
+<body>
+
+    <div id="canvas_container" class="container">
+        <p><a href="https://www.dartographer.com">Dartographer</a> © 2018 Aaron Barrett</p>
+        <canvas id="canvas" width="100" height="100" style="border:2px solid #000000;"></canvas>
+    </div>
+
+    <div class="container">
+
+        <table id="halton_controls" class="controls" border="1">
+            <tr>
+                <th>axis</th>
+                <th>sequence base</th>
+                <th>index increment</th>
+                <th>current index</th>
+            </tr>
+            <tr>
+                <td><label>x</label></td>
+                <td>
+                    <input id="x_base" type="number" value="2" min="1" max="1000000" disabled>
+                </td>
+                <td>
+                    <input id="x_index_increment" type="number" value="1" min="1" max="1000000" disabled>
+                </td>
+                <td>
+                    <input id="x_index" type="number" value="1" min="1" max="1000000" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td><label>y</label></td>
+                <td>
+                    <input id="y_base" type="number" value="3" min="1" max="1000000" disabled>
+                </td>
+                <td>
+                    <input id="y_index_increment" type="number" value="1" min="1" max="1000000" disabled>
+                </td>
+                <td>
+                    <input id="y_index" type="number" value="1" min="1" max="1000000" disabled>
+                </td>
+            </tr>
+        </table>
+
+        <table id="plot_controls" class="controls">
+            <tr>
+                <td>
+                    <label>Points Count</label>
+                    <input id="points_count_box" type="number" value="1" min="1" max="1000" disabled>
+                </td>
+                <td><input id="plot_random_button" type="button" value="Plot Random Points" disabled></td>
+                <td><input id="plot_halton_button" type="button" value="Plot Hatlon Points" disabled></td>
+            </tr>
+        </table>
+
+        <br>
+
+        <table id="reset_controls" class="controls">
+            <tr>
+                <td><input id="reset_halton_button" type="button" value="Reset Hatlon Generator" disabled></td>
+                <td><input id="clear_canvas_button" type="button" value="Clear Canvas" disabled></td>
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+</html>
