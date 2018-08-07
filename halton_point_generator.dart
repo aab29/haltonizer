@@ -1,10 +1,8 @@
-
 import "dart:math";
 import "point_generator.dart";
 import "halton_generator.dart";
 
 class HaltonPointGenerator implements PointGenerator {
-
   final HaltonGenerator xGenerator = new HaltonGenerator(2);
   final HaltonGenerator yGenerator = new HaltonGenerator(3);
 
@@ -15,5 +13,4 @@ class HaltonPointGenerator implements PointGenerator {
 
   Point<double> get nextPoint =>
       new Point(xGenerator.nextOutput(), yGenerator.nextOutput());
-
 }

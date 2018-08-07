@@ -1,6 +1,4 @@
-
 class HaltonGenerator {
-
   int sequenceBase;
 
   int index = 1;
@@ -27,5 +25,4 @@ class HaltonGenerator {
 
     return result;
   }
-
 }
