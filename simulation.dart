@@ -121,7 +121,7 @@ class Simulation {
 
     for (var pointIndex = 0; pointIndex < pointsCount; pointIndex++) {
       var point = pointGenerator.nextPoint;
-      plotPoint(point, color);
+      _plotPoint(point, color);
     }
   }
 
@@ -133,7 +133,7 @@ class Simulation {
   void _onClearCanvasButtonPressed(_) =>
       _context.clearRect(0.0, 0.0, _canvasSize, _canvasSize);
 
-  void plotPoint(Point<double> point, Color color) {
+  void _plotPoint(Point<double> point, Color color) {
     var x = point.x * _canvasSize;
     var y = point.y * _canvasSize;
 
