@@ -35,19 +35,19 @@ class Simulation {
         _spotSize = _calculateSpotSize(_canvas)
   {
 
-    _xBaseBox.onInput.listen(_onXBaseBoxInput);
+    _xBaseBox.onChange.listen(_onXBaseBoxInput);
     _xBaseBox.disabled = false;
-    _yBaseBox.onInput.listen(_onYBaseBoxInput);
+    _yBaseBox.onChange.listen(_onYBaseBoxInput);
     _yBaseBox.disabled = false;
 
-    _xIndexIncrementBox.onInput.listen(_onXIncrementBoxInput);
+    _xIndexIncrementBox.onChange.listen(_onXIncrementBoxInput);
     _xIndexIncrementBox.disabled = false;
-    _yIndexIncrementBox.onInput.listen(_onYIncrementBoxInput);
+    _yIndexIncrementBox.onChange.listen(_onYIncrementBoxInput);
     _yIndexIncrementBox.disabled = false;
 
-    _xIndexBox.onInput.listen(_onXIndexBoxInput);
+    _xIndexBox.onChange.listen(_onXIndexBoxInput);
     _xIndexBox.disabled = false;
-    _yIndexBox.onInput.listen(_onYIndexBoxInput);
+    _yIndexBox.onChange.listen(_onYIndexBoxInput);
     _yIndexBox.disabled = false;
 
     _pointsCountBox.disabled = false;
