@@ -6,7 +6,6 @@ import "random_point_generator.dart";
 import "halton_point_generator.dart";
 
 class Simulation {
-  final CanvasElement _canvas;
   final CanvasRenderingContext2D _context;
 
   final double _canvasSize;
@@ -27,19 +26,11 @@ class Simulation {
   final ButtonInputElement _resetHaltonButton = querySelector("#reset_halton_button");
   final ButtonInputElement _clearCanvasButton = querySelector("#clear_canvas_button");
 
-
-//  ButtonInputElement _pauseButton = querySelector("#pause_button");
-//  ButtonInputElement _stepButton = querySelector("#step_button");
-//  ButtonInputElement _clearButton = querySelector("#clear_button");
-//  ButtonInputElement _randomizeButton = querySelector("#randomize_button");
-
   RandomPointGenerator _randomPointGenerator = new RandomPointGenerator();
 
   HaltonPointGenerator _haltonPointGenerator = new HaltonPointGenerator();
 
-  int _pointsCount = 1;
-
-  Simulation(this._canvas, this._context) :
+  Simulation(CanvasElement _canvas, this._context) :
         _canvasSize = _calculateCanvasSize(_canvas),
         _spotSize = _calculateSpotSize(_canvas)
   {
@@ -54,7 +45,11 @@ class Simulation {
     _yIndexIncrementBox.onInput.listen(_onYIncrementBoxInput);
     _yIndexIncrementBox.disabled = false;
 
-    _pointsCountBox.onInput.listen(_onPointsCountBoxInput);
+    _xIndexBox.onInput.listen(_onXIndexBoxInput);
+    _xIndexBox.disabled = false;
+    _yIndexBox.onInput.listen(_onYIndexBoxInput);
+    _yIndexBox.disabled = false;
+
     _pointsCountBox.disabled = false;
 
     _plotRandomPointsButton.onClick.listen(_onPlotRandomPointsButtonPressed);
@@ -69,6 +64,7 @@ class Simulation {
     _clearCanvasButton.onClick.listen(_onClearCanvasButtonPressed);
     _clearCanvasButton.disabled = false;
 
+    _updateBoxValues();
 
 //    plotPoint(new Point(0.5, 0.5), Color.haltonDotColor);
 
@@ -81,35 +77,44 @@ class Simulation {
     return value;
   }
 
-  void _onPointsCountBoxInput(_) =>
-    _pointsCount = _readBoxValue(_pointsCountBox);
-
   void _onXBaseBoxInput(_) =>
     _haltonPointGenerator.xGenerator.sequenceBase =
         _readBoxValue(_xBaseBox, defaultValue: 2, minValue: 2, maxValue: 1000000);
 
   void _onYBaseBoxInput(_) =>
-    _haltonPointGenerator.xGenerator.sequenceBase =
+    _haltonPointGenerator.yGenerator.sequenceBase =
         _readBoxValue(_yBaseBox, defaultValue: 3, minValue: 2, maxValue: 1000000);
 
   void _onXIncrementBoxInput(_) =>
       _haltonPointGenerator.xGenerator.indexIncrement =
-          _readBoxValue(_xIndexIncrementBox, defaultValue: 1, minValue: 1, maxValue: 1000000);
+          _readBoxValue(_xIndexIncrementBox, defaultValue: 1, minValue: 0, maxValue: 1000000);
 
   void _onYIncrementBoxInput(_) =>
       _haltonPointGenerator.yGenerator.indexIncrement =
-          _readBoxValue(_yIndexIncrementBox, defaultValue: 1, minValue: 1, maxValue: 1000000);
+          _readBoxValue(_yIndexIncrementBox, defaultValue: 1, minValue: 0, maxValue: 1000000);
+
+  void _onXIndexBoxInput(_) =>
+      _haltonPointGenerator.xGenerator.index =
+          _readBoxValue(_xIndexBox, defaultValue: 1, minValue: 0, maxValue: 10000000);
+
+  void _onYIndexBoxInput(_) =>
+      _haltonPointGenerator.yGenerator.index =
+          _readBoxValue(_yIndexBox, defaultValue: 1, minValue: 0, maxValue: 10000000);
 
   void _onPlotRandomPointsButtonPressed(_) =>
       _plotPoints(_randomPointGenerator, Color.randomDotColor);
 
-  void _onPlotHaltonPointsButtonPressed(_) =>
-      _plotPoints(_haltonPointGenerator, Color.haltonDotColor);
+  void _onPlotHaltonPointsButtonPressed(_) {
+    _plotPoints(_haltonPointGenerator, Color.haltonDotColor);
+    _updateBoxValues();
+  }
 
   void _plotPoints(PointGenerator pointGenerator, Color color) {
-    print("They pressed it. $_pointsCount");
+    var pointsCount = _readBoxValue(_pointsCountBox, defaultValue: 1, minValue: 1, maxValue: 10000);
 
-    for (var pointIndex = 0; pointIndex < _pointsCount; pointIndex++) {
+    print("They pressed it. $pointsCount");
+
+    for (var pointIndex = 0; pointIndex < pointsCount; pointIndex++) {
       var point = pointGenerator.nextPoint;
       plotPoint(point, color);
     }
@@ -117,6 +122,7 @@ class Simulation {
 
   void _onResetHaltonButtonPressed(_) {
     _haltonPointGenerator.reset();
+    _updateBoxValues();
   }
 
   void _onClearCanvasButtonPressed(_) =>
@@ -132,6 +138,17 @@ class Simulation {
         y - _spotSize * 0.5,
         _spotSize,
         _spotSize);
+  }
+
+  void _updateBoxValues() {
+    _xBaseBox.value = _haltonPointGenerator.xGenerator.sequenceBase.toString();
+    _yBaseBox.value = _haltonPointGenerator.yGenerator.sequenceBase.toString();
+
+    _xIndexIncrementBox.value = _haltonPointGenerator.xGenerator.indexIncrement.toString();
+    _yIndexIncrementBox.value = _haltonPointGenerator.yGenerator.indexIncrement.toString();
+
+    _xIndexBox.value = _haltonPointGenerator.xGenerator.index.toString();
+    _yIndexBox.value = _haltonPointGenerator.yGenerator.index.toString();
   }
 
   static double _calculateCanvasSize(CanvasElement canvas) =>
