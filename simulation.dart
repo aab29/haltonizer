@@ -65,9 +65,6 @@ class Simulation {
     _clearCanvasButton.disabled = false;
 
     _updateBoxValues();
-
-//    plotPoint(new Point(0.5, 0.5), Color.haltonDotColor);
-
   }
 
   static int _readBoxValue(NumberInputElement box, {int defaultValue = 1, int minValue = 1, int maxValue = 1000}) {
@@ -112,8 +109,6 @@ class Simulation {
   void _plotPoints(PointGenerator pointGenerator, Color color) {
     var pointsCount = _readBoxValue(_pointsCountBox, defaultValue: 1, minValue: 1, maxValue: 10000);
 
-    print("They pressed it. $pointsCount");
-
     for (var pointIndex = 0; pointIndex < pointsCount; pointIndex++) {
       var point = pointGenerator.nextPoint;
       plotPoint(point, color);
@@ -157,23 +152,4 @@ class Simulation {
   static double _calculateSpotSize(CanvasElement canvas) =>
       canvas.width.toDouble() * 0.008;
 
-//  static Iterable<Point<double>> generateRandomPoints({pointsCount = 10}) sync* {
-//
-//    var randomGenerator = new Random();
-//
-//    for (var i = 0; i < pointsCount; i++) {
-//      yield new Point(randomGenerator.nextDouble(), randomGenerator.nextDouble());
-//    }
-//
-//  }
-
-//  void _startAnimating() {
-//    window.requestAnimationFrame(_update);
-//  }
-
-//  void _update(num time) {
-//    _context.clearRect(0.0, 0.0, _canvasSize, _canvasSize);
-//    _snake.draw(_context, time);
-//    window.requestAnimationFrame(_update);
-//  }
 }

@@ -9,21 +9,14 @@ class HaltonGenerator {
   HaltonGenerator(this.sequenceBase);
 
   double nextOutput() {
-    var result = 0.0;
-    var fraction = 1.0;
-    var i = index.toDouble();
-    while (i > 0) {
-      fraction /= sequenceBase;
-      result += fraction * (i % sequenceBase);
-      i /= sequenceBase;
-    }
+    var result = output(sequenceBase, index);
 
-    this.index += this.indexIncrement;
+    index += indexIncrement;
 
     return result;
   }
 
-  static double output(int sequenceBase, double index) {
+  static double output(int sequenceBase, num index) {
     var result = 0.0;
     var fraction = 1.0;
     while (index > 0.0) {
